@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Ignore project contents folder
+contents/
+contents/*
