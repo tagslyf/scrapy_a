@@ -67,6 +67,11 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'adult.pipelines.SomePipeline': 300,
 #}
+ITEM_PIPELINES = {
+	'scrapy.pipelines.images.ImagesPipeline': 1,
+	'adult.pipelines.MyImagesPipeline': 300.
+}
+IMAGES_STORE = "downloads"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +93,5 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kdWFuemliYXIuY29tIiwiaWF0IjoxNDg1MzE2MDAxLCJuYmYiOjE0ODUzMTYwMDEsImV4cCI6MTQ4NTkyMDgwMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.n5p42PSONYawxkmnpFQsJ9wzo4jKPdwCzcktjdR28yg"

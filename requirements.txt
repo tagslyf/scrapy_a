@@ -9,8 +9,10 @@ cssselect==1.0.1
 idna==2.2
 incremental==16.10.1
 lxml==3.7.2
+olefile==0.44
 packaging==16.8
 parsel==1.1.0
+Pillow==4.0.0
 pyasn1==0.1.9
 pyasn1-modules==0.0.8
 pycparser==2.17

@@ -12,7 +12,9 @@ from scrapy.item import Item, Field
 class AdultItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    name = "AdultItem"
     thread_id = Field()
-    title = Field()
-    content_url = Field()
-    content_images = Field()
+    thread_title = Field()
+    thread_url = Field()
+    image_urls = Field()
+    images = Field()
