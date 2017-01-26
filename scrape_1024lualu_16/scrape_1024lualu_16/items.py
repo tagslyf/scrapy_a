@@ -9,10 +9,10 @@ import scrapy
 from scrapy.item import Item, Field
 
 
-class AdultItem(Item):
+class Scrape1024Lualu16Item(scrapy.Item):
 	# define the fields for your item here like:
 	# name = scrapy.Field()
-	name = "AdultItem"
+	name = "Scrape1024Lualu16Item"
 	thread_url = Field()
 	topic_id = Field()
 	topic_title = Field()

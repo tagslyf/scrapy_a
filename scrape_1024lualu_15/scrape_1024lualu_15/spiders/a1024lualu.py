@@ -1,36 +1,33 @@
 # -*- coding: utf-8 -*-
-import os, pprint, requests, scrapy
-from adult.items import AdultItem
+import scrapy
+import os, pprint, requests, scrapy, time
+from scrape_1024lualu_15.items import Scrape1024Lualu15Item
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 
-class Scrape1024lualuSpider(scrapy.Spider):
-	name = "scrape_1024lualu"
+class A1024lualuSpider(scrapy.Spider):
+	name = "1024lualu"
 	allowed_domains = ["x3.1024lualu.pw"]
-	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=16']
+	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	CONTENT_DIR = "adult/contents"
-	page_num = 0
-
-	def __init__(self):
-		pass
-
+	page_num = 2
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
 
 		if not self.page_num:
-			# self.page_num = int(html.find("div", {'class': "pages"}).findAll("a")[-1]['href'].split("=")[-1]) # Getting the last page
-			self.page_num = 100 # Set 100 pages only
+			self.page_num = int(html.find("div", {'class': "pages"}).findAll("a")[-1]['href'].split("=")[-1])
 		
 		while self.page_num > 0:
 			url = "{}&page={}".format(self.start_urls[0], self.page_num)
-			# print(url)
 			if self.page_num:
 				yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
 			self.page_num -= 1
 
+
 	def scrape_thread(self, response):
+		start = datetime.now()
 		page_num = response.meta['page_num']
 		html = BeautifulSoup(response.body, "html.parser")
 		if html.find('table', {'id': "ajaxtable"}):
@@ -63,8 +60,8 @@ class Scrape1024lualuSpider(scrapy.Spider):
 			content = html.find('div', {'id': "read_tpc"})
 			thread['image_urls'] = [img['src'] for img in content.findAll('img')] if len(content.findAll('img')) > 0 else []
 
-			item = AdultItem(
-				thread_url=thread['thread_url'],
+			item = Scrape1024Lualu15Item(
+				thread_url=thread['thread_url'], 
 				topic_id=thread['topic_id'], 
 				topic_title=thread['topic_title'],
 				topic_url=thread['topic_url'],

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for adult project
+# Scrapy settings for scrape_1024lualu_15 project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'adult'
+BOT_NAME = 'scrape_1024lualu_15'
 
-SPIDER_MODULES = ['adult.spiders']
-NEWSPIDER_MODULE = 'adult.spiders'
+SPIDER_MODULES = ['scrape_1024lualu_15.spiders']
+NEWSPIDER_MODULE = 'scrape_1024lualu_15.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'adult (+http://www.yourdomain.com)'
+#USER_AGENT = 'scrape_1024lualu_15 (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'adult.middlewares.AdultSpiderMiddleware': 543,
+#    'scrape_1024lualu_15.middlewares.Scrape1024Lualu15SpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'adult.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'scrape_1024lualu_15.middlewares.MyCustomDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,11 +65,11 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'adult.pipelines.SomePipeline': 300,
+#    'scrape_1024lualu_15.pipelines.SomePipeline': 300,
 #}
 ITEM_PIPELINES = {
 	'scrapy.pipelines.images.ImagesPipeline': 1,
-	'adult.pipelines.MyImagesPipeline': 300.
+	'scrape_1024lualu_15.pipelines.MyImagesPipeline': 300.
 }
 IMAGES_STORE = "downloads"
 
@@ -86,6 +86,10 @@ IMAGES_STORE = "downloads"
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_MAX_DELAY = 60
+
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 #HTTPCACHE_ENABLED = True
@@ -94,8 +98,5 @@ IMAGES_STORE = "downloads"
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-AUTOTHROTTLE_ENABLED = True
-AUTOTHROTTLE_START_DELAY = 5
-AUTOTHROTTLE_MAX_DELAY = 60
-
-UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kdWFuemliYXIuY29tIiwiaWF0IjoxNDg1MzE2MDAxLCJuYmYiOjE0ODUzMTYwMDEsImV4cCI6MTQ4NTkyMDgwMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.n5p42PSONYawxkmnpFQsJ9wzo4jKPdwCzcktjdR28yg"
+# UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kdWFuemliYXIuY29tIiwiaWF0IjoxNDg1MzE2MDAxLCJuYmYiOjE0ODUzMTYwMDEsImV4cCI6MTQ4NTkyMDgwMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.n5p42PSONYawxkmnpFQsJ9wzo4jKPdwCzcktjdR28yg"
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kcnpoYW4uY29tIiwiaWF0IjoxNDg1NDExNjUyLCJuYmYiOjE0ODU0MTE2NTIsImV4cCI6MTQ4NjAxNjQ1MiwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.tm97o3O73J2_xkaZXDlCkgDad9H86KSivGQiD5ovnYg"

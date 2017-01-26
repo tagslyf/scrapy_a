@@ -7,12 +7,12 @@
 import os, requests, scrapy
 from scrapy.pipelines.images import ImagesPipeline
 
-from adult.settings import UPLOAD_API_TOKEN, IMAGES_STORE
+from scrape_1024lualu_16.settings import UPLOAD_API_TOKEN, IMAGES_STORE
 
 
-class AdultPipeline(object):
-	def process_item(self, item, spider):
-		return item
+class Scrape1024Lualu16Pipeline(object):
+    def process_item(self, item, spider):
+        return item
 
 
 class MyImagesPipeline(ImagesPipeline):
@@ -24,7 +24,7 @@ class MyImagesPipeline(ImagesPipeline):
 	def item_completed(self, results, item, info):
 		image_paths = [x['path'] for ok, x in results if ok]
 
-		api_base_url = "http://duanzibar.com/wp-json/wp/v2/"
+		api_base_url = "http://drzhan.com/wp-json/wp/v2/"
 		image_ids = []
 		content = ""
 		for image_path in image_paths:
