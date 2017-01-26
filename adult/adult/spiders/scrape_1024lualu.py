@@ -12,21 +12,22 @@ class Scrape1024lualuSpider(scrapy.Spider):
 	CONTENT_DIR = "adult/contents"
 	page_num = 265
 
+	def __init__(self):
+		pass
+
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
 
-		page_counter = int(html.find("div", {'class': "pages"}).findAll("a")[-1]['href'].split("=")[-1])
-
-		# for page_num in range(page_counter, 0, -1):
-		# 	url = "{}&page={}".format(self.start_urls[0], page_num)
-		# 	yield scrapy.Request(url, meta={'page_num': page_num}, callback=self.scrape_thread)
+		if not self.page_num:
+			self.page_num = int(html.find("div", {'class': "pages"}).findAll("a")[-1]['href'].split("=")[-1])
 		
-		url = "{}&page={}".format(self.start_urls[0], self.page_num)
-		print(url)
-		yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
-		self.page_num += 1
-			
+		while self.page_num > 0:
+			url = "{}&page={}".format(self.start_urls[0], self.page_num)
+			print(url)
+			if self.page_num:
+				yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
+			self.page_num -= 1
 
 	def scrape_thread(self, response):
 		page_num = response.meta['page_num']
