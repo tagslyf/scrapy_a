@@ -11,7 +11,7 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	page_num = 2
+	page_num = 100
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
@@ -19,15 +19,17 @@ class A1024lualuSpider(scrapy.Spider):
 		if not self.page_num:
 			self.page_num = int(html.find("div", {'class': "pages"}).findAll("a")[-1]['href'].split("=")[-1])
 		
-		while self.page_num > 0:
-			url = "{}&page={}".format(self.start_urls[0], self.page_num)
-			if self.page_num:
-				yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
-			self.page_num -= 1
+		# while self.page_num > 0:
+		# 	url = "{}&page={}".format(self.start_urls[0], self.page_num)
+		# 	if self.page_num:
+		# 		yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
+		# 	self.page_num -= 1
+		url = "{}&page={}".format(self.start_urls[0], self.page_num)
+		yield scrapy.Request(url, meta={'page_num': self.page_num}, callback=self.scrape_thread)
 
 
 	def scrape_thread(self, response):
-		start = datetime.now()
+		print(response.url)
 		page_num = response.meta['page_num']
 		html = BeautifulSoup(response.body, "html.parser")
 		if html.find('table', {'id': "ajaxtable"}):
