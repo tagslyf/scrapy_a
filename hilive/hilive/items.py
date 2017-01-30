@@ -10,13 +10,14 @@ from scrapy.item import Item, Field
 
 
 class HiliveItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    name = "HiliveItem"
-    news_title = Field()
-    news_url = Field()
-    news_thumbnail = Field()
-    image_urls = Field()
-    images = Field()
-    article_url = Field()
-    articles = Field()
+	# define the fields for your item here like:
+	# name = scrapy.Field()
+	name = "HiliveItem"
+	title = Field()
+	response_url = Field()
+	thumbnail_url = Field()
+	article_url = Field()
+	articles = Field()
+	image_urls = Field()
+	images = Field()
+	

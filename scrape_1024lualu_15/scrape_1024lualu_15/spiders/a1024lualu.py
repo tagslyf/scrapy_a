@@ -11,7 +11,7 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	page_num = 98
+	page_num = 95
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
@@ -49,7 +49,7 @@ class A1024lualuSpider(scrapy.Spider):
 									thread['topic_title'] = tds[1].h3.a.string[8:]
 									thread['topic_url'] = "http://{}/pw/{}".format(self.allowed_domains[0], tds[1].h3.a['href'])
 									thread['topic_id'] = tds[1].h3.a.get('id')
-									yield scrapy.Request(thread['topic_url'], meta={'item': thread}, callback=self.scrape_threadContent)
+									thread['image_urls'] = yield scrapy.Request(thread['topic_url'], meta={'item': thread}, callback=self.scrape_threadContent)
 						except Exception as ex:
 							pass
 
@@ -58,15 +58,9 @@ class A1024lualuSpider(scrapy.Spider):
 		thread = response.meta['item']
 		html = BeautifulSoup(response.body, "html.parser")
 
+		thread['image_urls'] = []
 		if html.find('div', {'id': "read_tpc"}):
 			content = html.find('div', {'id': "read_tpc"})
 			thread['image_urls'] = [img['src'] for img in content.findAll('img')] if len(content.findAll('img')) > 0 else []
-
-			item = Scrape1024Lualu15Item(
-				thread_url=thread['thread_url'], 
-				topic_id=thread['topic_id'], 
-				topic_title=thread['topic_title'],
-				topic_url=thread['topic_url'],
-				image_urls=thread['image_urls']
-			)
-			yield item
+			
+			yield Scrape1024Lualu15Item(thread)

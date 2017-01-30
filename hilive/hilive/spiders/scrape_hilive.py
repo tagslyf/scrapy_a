@@ -2,32 +2,31 @@
 import scrapy
 from bs4 import BeautifulSoup
 
+from hilive.items import HiliveItem
 from hilive.settings import DEFAULT_REQUEST_HEADERS
 
 
 class ScrapeHiliveSpider(scrapy.Spider):
 	name = "scrape_hilive"
 	allowed_domains = ["www.hilive.tv"]
-	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=1']
+	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=3']
+
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
 
 		for newsblock in html.findAll('div', {'class': "newsblock"}):
-			news = {}
+			news = HiliveItem()
 			news['title'] = newsblock.find("h2").find("a").string
 			news['response_url'] = response.url
 			news['thumbnail_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("img")['src'])
 			news['image_urls'] = []
 			news['image_urls'].append("https://{}{}".format(self.allowed_domains[0], newsblock.find("img")['src']))
 			news['article_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("h2").find("a")['href'])
-			articles = yield scrapy.Request(news['article_url'], meta={'news': news}, callback=self.scrape_hiliveArticle)
-			news['articles'] = articles
-			yield news
-			return None # remove this
+			news['articles'] = yield scrapy.Request(news['article_url'], meta={'news': news}, callback=self.scrape_hiliveArticle)
 
-		if html.find('a', {'id': "NextPage"}) and 'href' in html.find('a', {'id': "NextPage"}):
-			yield scrapy.Request("https://{}{}".format(self.allowed_domains[0], html.find('a', {'id': "NextPage"})['href']), self.parse)
+		# if html.find('a', {'id': "NextPage"}) and 'href' in html.find('a', {'id': "NextPage"}):
+		# 	yield scrapy.Request("https://{}{}".format(self.allowed_domains[0], html.find('a', {'id': "NextPage"})['href']), self.parse)
 
 
 	def scrape_hiliveArticle(self, response):
@@ -52,4 +51,5 @@ class ScrapeHiliveSpider(scrapy.Spider):
 
 				if article_string:
 					news['articles'].append(article_string)
+
 		yield news
