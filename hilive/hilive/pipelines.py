@@ -18,6 +18,9 @@ class MyImagesPipeline(ImagesPipeline):
 
 	def get_media_requests(self, item, info):
 		for image_url in item['image_urls']:
+			if image_url == item['thumbnail_url']:
+				print('REQUESTING IMAGE WITH HEADER')
+				yield scrapy.Request(image_url, headers={'Referer': item['response_url']})
 			yield scrapy.Request(image_url)
 
 	def item_completed(self, results, item, info):
@@ -62,4 +65,5 @@ class MyImagesPipeline(ImagesPipeline):
 		# 	print("Success uploading to API.")
 
 		# return item
+		print(item)
 		pass

@@ -2,6 +2,8 @@
 import scrapy
 from bs4 import BeautifulSoup
 
+from hilive.settings import DEFAULT_REQUEST_HEADERS
+
 
 class ScrapeHiliveSpider(scrapy.Spider):
 	name = "scrape_hilive"
@@ -10,10 +12,12 @@ class ScrapeHiliveSpider(scrapy.Spider):
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
+
 		for newsblock in html.findAll('div', {'class': "newsblock"}):
 			news = {}
 			news['title'] = newsblock.find("h2").find("a").string
-			news['thumbnail_url'] = "{}{}".format(self.allowed_domains[0], newsblock.find("img")['src'])
+			news['response_url'] = response.url
+			news['thumbnail_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("img")['src'])
 			news['image_urls'] = []
 			news['image_urls'].append("https://{}{}".format(self.allowed_domains[0], newsblock.find("img")['src']))
 			news['article_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("h2").find("a")['href'])
@@ -48,4 +52,4 @@ class ScrapeHiliveSpider(scrapy.Spider):
 
 				if article_string:
 					news['articles'].append(article_string)
-		return news # remove this
+		yield news
