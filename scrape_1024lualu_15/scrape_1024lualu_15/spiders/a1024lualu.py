@@ -58,7 +58,6 @@ class A1024lualuSpider(scrapy.Spider):
 		thread = response.meta['item']
 		html = BeautifulSoup(response.body, "html.parser")
 
-		thread['image_urls'] = []
 		if html.find('div', {'id': "read_tpc"}):
 			content = html.find('div', {'id': "read_tpc"})
 			thread['image_urls'] = [img['src'] for img in content.findAll('img')] if len(content.findAll('img')) > 0 else []
