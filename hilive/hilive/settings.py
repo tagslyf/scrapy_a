@@ -67,6 +67,11 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'hilive.pipelines.SomePipeline': 300,
 #}
+ITEM_PIPELINES = {
+	'scrapy.pipelines.images.ImagesPipeline': 1,
+	'hilive.pipelines.MyImagesPipeline': 300.
+}
+IMAGES_STORE = "downloads"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -81,6 +86,10 @@ ROBOTSTXT_OBEY = True
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_MAX_DELAY = 60
+
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 #HTTPCACHE_ENABLED = True
@@ -88,3 +97,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU1MTM4MjAsIm5iZiI6MTQ4NTUxMzgyMCwiZXhwIjoxNDg2MTE4NjIwLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.o_lWvwaUK8iN3QWYMTHow9MkZl4aLQyFnaH_Sr_KlSQ"
