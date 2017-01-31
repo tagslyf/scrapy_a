@@ -3,13 +3,12 @@ import scrapy
 from bs4 import BeautifulSoup
 
 from hilive.items import HiliveItem
-from hilive.settings import DEFAULT_REQUEST_HEADERS
 
 
 class ScrapeHiliveSpider(scrapy.Spider):
 	name = "scrape_hilive"
 	allowed_domains = ["www.hilive.tv"]
-	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=12']
+	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=1']
 
 
 	def parse(self, response):
@@ -25,8 +24,10 @@ class ScrapeHiliveSpider(scrapy.Spider):
 			news['article_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("h2").find("a")['href'])
 			news['articles'] = yield scrapy.Request(news['article_url'], meta={'news': news}, callback=self.scrape_hiliveArticle)
 
-		if html.find('a', {'id': "NextPage"}) and 'href' in html.find('a', {'id': "NextPage"}):
-			yield scrapy.Request("https://{}{}".format(self.allowed_domains[0], html.find('a', {'id': "NextPage"})['href']), self.parse)
+		print("https://{}{}".format(self.allowed_domains[0], next_page))
+		next_page = html.find('a', {'id': "NextPage"})['href']
+		if next_page is not None:
+			yield scrapy.Request("https://{}{}".format(self.allowed_domains[0], next_page), callback=self.parse)
 
 
 	def scrape_hiliveArticle(self, response):
