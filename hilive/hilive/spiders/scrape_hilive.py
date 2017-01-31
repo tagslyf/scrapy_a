@@ -9,7 +9,7 @@ from hilive.settings import DEFAULT_REQUEST_HEADERS
 class ScrapeHiliveSpider(scrapy.Spider):
 	name = "scrape_hilive"
 	allowed_domains = ["www.hilive.tv"]
-	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=11']
+	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=12']
 
 
 	def parse(self, response):
