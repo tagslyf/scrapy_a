@@ -19,7 +19,8 @@ NEWSPIDER_MODULE = 'hilive.spiders'
 #USER_AGENT = 'hilive (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -97,7 +98,10 @@ AUTOTHROTTLE_MAX_DELAY = 60
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU3NTgxODMsIm5iZiI6MTQ4NTc1ODE4MywiZXhwIjoxNDg2MzYyOTgzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.iM9o57mx4hQqyVTtKlvhMQafmndfWe2u83jf6YsD7Gs"
+API_BASE_URL = "http://jpavnews.com/wp-json/wp/v2/"
+# UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU3NTgxODMsIm5iZiI6MTQ4NTc1ODE4MywiZXhwIjoxNDg2MzYyOTgzLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.iM9o57mx4hQqyVTtKlvhMQafmndfWe2u83jf6YsD7Gs"
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU5MzQ3MjEsIm5iZiI6MTQ4NTkzNDcyMSwiZXhwIjoxNDg2NTM5NTIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.JgzVTy-tBYU2Puami4frrGIAXAJ79aBwsllXeXIVLmg"
+CATEGORY_LIST = ["AV碟报"]
 
 DEFAULT_REQUEST_HEADERS = {
 	'Referer': ""
