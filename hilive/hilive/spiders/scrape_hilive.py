@@ -25,7 +25,6 @@ class ScrapeHiliveSpider(scrapy.Spider):
 			news['article_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("h2").find("a")['href'])
 			news['articles'] = yield scrapy.Request(news['article_url'], headers={'Referer': news['response_url']}, meta={'news': news}, callback=self.scrape_hiliveArticle)
 		next_page = html.find('a', {'id': "NextPage"})['href']
-		print("https://{}{}".format(self.allowed_domains[0], next_page))
 		if next_page is not None:
 			yield scrapy.Request("https://{}{}".format(self.allowed_domains[0], next_page), callback=self.parse)
 
