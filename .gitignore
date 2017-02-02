@@ -91,4 +91,5 @@ ENV/
 # Ignore project contents folder
 contents/
 contents/*
-logfile.txt
+log*.txt
+*/logs/*
