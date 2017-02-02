@@ -19,7 +19,8 @@ NEWSPIDER_MODULE = 'nianhua03.spiders'
 #USER_AGENT = 'nianhua03 (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -98,7 +99,10 @@ AUTOTHROTTLE_MAX_DELAY = 60
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU3NTczMDksIm5iZiI6MTQ4NTc1NzMwOSwiZXhwIjoxNDg2MzYyMTA5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.qVc68HdF0RdRAg89Tp4kG40GvHANBF7s2doijCCOdL8"
+API_BASE_URL = "http://avalbum.com/wp-json/wp/v2/"
+# UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU3NTczMDksIm5iZiI6MTQ4NTc1NzMwOSwiZXhwIjoxNDg2MzYyMTA5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.qVc68HdF0RdRAg89Tp4kG40GvHANBF7s2doijCCOdL8"
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hdmFsYnVtLmNvbSIsImlhdCI6MTQ4NTkxNjMzNiwibmJmIjoxNDg1OTE2MzM2LCJleHAiOjE0ODY1MjExMzYsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.65UNbVLTQ_bQ1cVEc8jS4pyiODhqHBfEVHWywkWJnTc"
+CATEGORY_LIST = ["AV资讯"]
 
 DEFAULT_REQUEST_HEADERS = {
 	'Referer': ""
