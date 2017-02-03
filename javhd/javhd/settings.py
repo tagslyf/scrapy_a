@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for hilive project
+# Scrapy settings for javhd project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'hilive'
+BOT_NAME = 'javhd'
 
-SPIDER_MODULES = ['hilive.spiders']
-NEWSPIDER_MODULE = 'hilive.spiders'
+SPIDER_MODULES = ['javhd.spiders']
+NEWSPIDER_MODULE = 'javhd.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'hilive (+http://www.yourdomain.com)'
+#USER_AGENT = 'javhd (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 # ROBOTSTXT_OBEY = True
@@ -48,13 +48,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'hilive.middlewares.HiliveSpiderMiddleware': 543,
+#    'javhd.middlewares.JavhdSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'hilive.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'javhd.middlewares.MyCustomDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -66,11 +66,11 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'hilive.pipelines.SomePipeline': 300,
+#    'javhd.pipelines.SomePipeline': 300,
 #}
 ITEM_PIPELINES = {
 	'scrapy.pipelines.images.ImagesPipeline': 1,
-	'hilive.pipelines.MyImagesPipeline': 300.
+	'javhd.pipelines.MyImagesPipeline': 300.
 }
 IMAGES_STORE = "downloads"
 
@@ -87,10 +87,6 @@ IMAGES_STORE = "downloads"
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
-# AUTOTHROTTLE_ENABLED = True
-# AUTOTHROTTLE_START_DELAY = 5
-# AUTOTHROTTLE_MAX_DELAY = 60
-
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 #HTTPCACHE_ENABLED = True
@@ -98,9 +94,9 @@ IMAGES_STORE = "downloads"
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-API_BASE_URL = "http://jpavnews.com/wp-json/wp/v2/"
-UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU5MzQ3MjEsIm5iZiI6MTQ4NTkzNDcyMSwiZXhwIjoxNDg2NTM5NTIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.JgzVTy-tBYU2Puami4frrGIAXAJ79aBwsllXeXIVLmg"
-CATEGORY_LIST = ["AV情报"]
+API_BASE_URL = "http://avalbum.com/wp-json/wp/v2/"
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hdmFsYnVtLmNvbSIsImlhdCI6MTQ4NjAyODYxNiwibmJmIjoxNDg2MDI4NjE2LCJleHAiOjE0ODY2MzM0MTYsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.02V53AfCuCgCtOajNdcSBAZdcIYBpu1p02XpTbMQ8MU"
+CATEGORY_LIST = []
 
 DEFAULT_REQUEST_HEADERS = {
 	'Referer': ""

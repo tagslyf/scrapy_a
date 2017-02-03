@@ -9,7 +9,7 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=16']
 
-	page_num = 89
+	page_num = 88
 
 
 	def parse(self, response):

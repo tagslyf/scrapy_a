@@ -54,14 +54,13 @@ class MyImagesPipeline(ImagesPipeline):
 					if image_url in item['articles']:
 						item_index = item['articles'].index(image_url)
 						item['articles'][item_index] = """
-							<img src='{}'><br>
+							<img src="{}"><br>
 						""".format(response.json()['source_url'])
 					elif image_url == item['thumbnail_url']:
 						thumbnail_url = (response.json()['id'], response.json()['source_url'])
 					image_ids.append((response.json()['id'], response.json()['source_url']))
 				file.close()
 				os.remove("{}/{}".format(IMAGES_STORE, image_path))
-
 			headers = {'Authorization': "Bearer {}".format(UPLOAD_API_TOKEN)}
 			categories = []
 			try:

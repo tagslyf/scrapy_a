@@ -6,12 +6,12 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import os, requests, scrapy
 from scrapy.pipelines.images import ImagesPipeline
-from hilive.settings import API_BASE_URL, CATEGORY_LIST, IMAGES_STORE, UPLOAD_API_TOKEN
+from javhd.settings import API_BASE_URL, CATEGORY_LIST, IMAGES_STORE, UPLOAD_API_TOKEN
 
 
-class HilivePipeline(object):
-    def process_item(self, item, spider):
-        return item
+class JavhdPipeline(object):
+	def process_item(self, item, spider):
+		return item
 
 
 class MyImagesPipeline(ImagesPipeline):
