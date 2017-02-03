@@ -74,7 +74,7 @@ class MyImagesPipeline(ImagesPipeline):
 			data = {
 				'title': item['title'],
 				'content': "<br> ".join(item['articles']),
-				'status': 'publish',
+				'status': "publish",
 				'featured_media': thumbnail_url[0] if thumbnail_url else image_ids[0][0],
 				'categories': categories
 			}

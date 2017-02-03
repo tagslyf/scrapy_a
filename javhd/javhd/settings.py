@@ -95,6 +95,8 @@ IMAGES_STORE = "downloads"
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 API_BASE_URL = "http://avalbum.com/wp-json/wp/v2/"
+MEDIA_URL = "http://s1.imagescool.com/wp-json/wp/v2/"
+MEDIA_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zMS5pbWFnZXNjb29sLmNvbSIsImlhdCI6MTQ4NjEwMzQ2MywibmJmIjoxNDg2MTAzNDYzLCJleHAiOjE0ODY3MDgyNjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.zeSfJRANYyV5Mem_2h_S4AQcMyDpH-0041Ox5fr1c9A"
 UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hdmFsYnVtLmNvbSIsImlhdCI6MTQ4NjAyODYxNiwibmJmIjoxNDg2MDI4NjE2LCJleHAiOjE0ODY2MzM0MTYsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.02V53AfCuCgCtOajNdcSBAZdcIYBpu1p02XpTbMQ8MU"
 CATEGORY_LIST = []
 
