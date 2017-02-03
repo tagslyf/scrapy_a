@@ -28,7 +28,7 @@ class JavhdAllSpider(scrapy.Spider):
 
 		next_page = response.xpath("""//a[@class="next navi paging"]/@href""").extract_first()
 		if next_page:
-			yield scrapy.Request(next_page, self.parse)
+			yield scrapy.Request(next_page, self.parseJALang)
 
 	def scrape_articleContents(self, response):
 		item = response.meta['item']
