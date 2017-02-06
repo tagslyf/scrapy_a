@@ -8,5 +8,7 @@ http://drzhan.com/wp-login.php
 http://avalbum.com/wp-login.php
 http://jpavnews.com/wp-login.php
 
+# For backend: {url}/wp-login.php?mmk=open
+
 # Start spider scraping with logs
 scrapy crawl scrape_nianhua03 —set LOG_FILE=logfile.txt
