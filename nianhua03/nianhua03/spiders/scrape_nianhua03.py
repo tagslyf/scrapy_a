@@ -36,9 +36,13 @@ class ScrapeNianhua03Spider(scrapy.Spider):
 		item['articles'].append(" ".join(string_published))
 		for t in response.xpath("//article/*")[2].xpath("./*"):
 			if  t.xpath("./@src").extract_first():
+				if not item['thumbnail_url']:
+					item['thumbnail_url'] = t.xpath("./@src").extract_first()
 				item['image_urls'].append(t.xpath("./@src").extract_first())
 				item['articles'].append(t.xpath("./@src").extract_first())
 			elif t.xpath(".//img").extract_first():
+				if not item['thumbnail_url']:
+					item['thumbnail_url'] = t.xpath(".//img/@src").extract_first()
 				item['image_urls'].append(t.xpath(".//img/@src").extract_first())
 				item['articles'].append(t.xpath(".//img/@src").extract_first())
 			else:
