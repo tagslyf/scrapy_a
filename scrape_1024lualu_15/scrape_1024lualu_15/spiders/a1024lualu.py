@@ -16,7 +16,7 @@ class A1024lualuSpider(scrapy.Spider):
 	def parse(self, response):
 		print(response.xpath("""//div[@class="pages"]/a"""))
 		print(response.xpath("""//div[@class="pages"]/a""").extract())
-		print(response.xpath("""//div[@class="pages"]/a""").extract()[-1].xpath("./@href").extract_first())
+		print(response.xpath("""//div[@class="pages"]/a""").extract()[-1])
 
 
 	def parse_thread(self, response):
