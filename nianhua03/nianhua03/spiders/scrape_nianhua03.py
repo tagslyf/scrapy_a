@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import scrapy
+import requests, scrapy
 from bs4 import BeautifulSoup
 
 from nianhua03.items import Nianhua03Item
+from nianhua03.settings import API_BASE_URL
 
 
 class ScrapeNianhua03Spider(scrapy.Spider):
@@ -18,6 +19,11 @@ class ScrapeNianhua03Spider(scrapy.Spider):
 			item['title'] = li.xpath('./a/text()').extract_first()
 			item['article_url'] = "http://wap.nianhua03.xyz{}".format(li.xpath('./a/@href').extract_first())
 			item['thumbnail_url'] = ""
+			search_response = requests.get("{}posts?search={}".format(API_BASE_URL, item['title']))
+			if search_response.status_code == 200:
+				if search_response.json():
+					print("{}	{}	{}".format("Title existed in API.", item['article_url'], item['title']))
+					continue
 			item['articles'] = yield scrapy.Request(item['article_url'], meta={'item': item}, headers={'Referer': item['response_url']}, callback=self.scrape_nianhua03Article)
 		next_page = response.xpath('//div[@id="channelshow"]/a[contains(text(), "下一页")]/@href').extract_first()
 		if next_page:

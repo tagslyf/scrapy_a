@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import os, scrapy
+import os, requests, scrapy
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
 from hilive.items import HiliveItem
+from hilive.settings import API_BASE_URL
 
 
 class ScrapeHiliveSpider(scrapy.Spider):
@@ -11,10 +12,11 @@ class ScrapeHiliveSpider(scrapy.Spider):
 	allowed_domains = ["www.hilive.tv"]
 	start_urls = ['https://www.hilive.tv/NewsList/ALL?p=1']
 
+	posts = {}
+
 
 	def parse(self, response):
 		html = BeautifulSoup(response.body, "html.parser")
-
 		for newsblock in html.findAll('div', {'class': "newsblock"}):
 			news = HiliveItem()
 			news['title'] = newsblock.find("h2").find("a").string
@@ -23,6 +25,11 @@ class ScrapeHiliveSpider(scrapy.Spider):
 			news['image_urls'] = []
 			news['image_urls'].append("https://{}{}".format(self.allowed_domains[0], newsblock.find("img")['src']))
 			news['article_url'] = "https://{}{}".format(self.allowed_domains[0], newsblock.find("h2").find("a")['href'])
+			search_response = requests.get("{}posts?search={}".format(API_BASE_URL, news['title']))
+			if search_response.status_code == 200:
+				if search_response.json():
+					print("{}	{}	{}".format("Title existed in API.", news['article_url'], news['title']))
+					continue
 			news['articles'] = yield scrapy.Request(news['article_url'], headers={'Referer': news['response_url']}, meta={'news': news}, callback=self.scrape_hiliveArticle)
 		next_page = html.find('a', {'id': "NextPage"})['href']
 		if next_page is not None:
