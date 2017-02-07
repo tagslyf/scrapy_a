@@ -6,6 +6,7 @@ from datetime import datetime
 from scrape_1024lualu_15.items import Scrape1024Lualu15Item
 from scrape_1024lualu_15.settings import API_BASE_URL
 
+
 class A1024lualuSpider(scrapy.Spider):
 	name = "1024lualu"
 	allowed_domains = ["x3.1024lualu.pw"]
@@ -13,7 +14,11 @@ class A1024lualuSpider(scrapy.Spider):
 
 	pages = 60
 
+
 	def parse(self, response):
+		yield scrapy.Request("http://x3.1024lualu.pw/pw/thread.php?fid=16&page=60", callback=self.parse_thread)
+		return None
+		
 		for page in range(self.pages + 1)[::1]:
 			if page:
 				yield scrapy.Request("{}&page={}".format(self.start_urls[0], page), callback=self.parse_thread)
@@ -39,9 +44,15 @@ class A1024lualuSpider(scrapy.Spider):
 		item = response.meta['item']
 		item['image_urls'] = []
 		item['articles'] = []
-		for img in response.xpath("""//div[@id="read_tpc"]/img"""):
-			if not item['thumbnail_url']:
-				item['thumbnail_url'] = img.xpath("""./@src""").extract_first()
-			item['articles'].append(img.xpath("""./@src""").extract_first())	
-			item['image_urls'].append(img.xpath("""./@src""").extract_first())
+		if response.xpath("""//div[@id="read_tpc"]/img"""):
+			for img in response.xpath("""//div[@id="read_tpc"]/img"""):
+				item['articles'].append(img.xpath("""./@src""").extract_first())
+				item['image_urls'].append(img.xpath("""./@src""").extract_first())
+		else:
+			html = BeautifulSoup(response.body, "html.parser")
+
+			imgs = html.find('div', {'id': "read_tpc"}).findAll("img")
+			for img in imgs:
+				item['articles'].append(img['src'])
+				item['image_urls'].append(img['src'])
 		yield item

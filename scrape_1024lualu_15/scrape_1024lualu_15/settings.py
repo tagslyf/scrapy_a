@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 # Scrapy settings for scrape_1024lualu_15 project
 #
@@ -70,7 +71,7 @@ ROBOTSTXT_OBEY = False
 #}
 ITEM_PIPELINES = {
 	'scrapy.pipelines.images.ImagesPipeline': 1,
-	'scrape_1024lualu_15.pipelines.MyImagesPipeline': 300.
+	'scrape_1024lualu_15.pipelines.MyImagesPipeline': 2
 }
 IMAGES_STORE = "downloads"
 
@@ -95,6 +96,10 @@ IMAGES_STORE = "downloads"
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+# Generate log file
+LOG_FILE = 'logs/{}.txt'.format(datetime.now().strftime("%Y%m%d_%H%M%S"))
+
+# Project settings
 API_BASE_URL = "http://drzhan.com/wp-json/wp/v2/"
 MEDIA_URL = "http://s1.imagescool.com/wp-json/wp/v2/"
 MEDIA_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zMS5pbWFnZXNjb29sLmNvbSIsImlhdCI6MTQ4NjEwMzQ2MywibmJmIjoxNDg2MTAzNDYzLCJleHAiOjE0ODY3MDgyNjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.zeSfJRANYyV5Mem_2h_S4AQcMyDpH-0041Ox5fr1c9A"

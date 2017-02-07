@@ -10,5 +10,7 @@ http://jpavnews.com/wp-login.php
 
 # For backend: {url}/wp-login.php?mmk=open
 
+# Docs for WP API: http://v2.wp-api.org/reference/posts/
+
 # Start spider scraping with logs
 scrapy crawl scrape_nianhua03 —set LOG_FILE=logfile.txt
