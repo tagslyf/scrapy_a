@@ -13,9 +13,10 @@ class Scrape1024Lualu15Item(scrapy.Item):
 	# define the fields for your item here like:
 	# name = scrapy.Field()
 	name = "Scrape1024Lualu15Item"
-	thread_url = Field()
-	topic_id = Field()
-	topic_title = Field()
-	topic_url = Field()
+	title = Field()
+	response_url = Field()
+	thumbnail_url = Field()
+	article_url = Field()
+	articles = Field()
 	image_urls = Field()
 	images = Field()

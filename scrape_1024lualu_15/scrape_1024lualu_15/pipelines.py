@@ -7,7 +7,7 @@
 import json, os, requests, scrapy
 from scrapy.pipelines.images import ImagesPipeline
 
-from scrape_1024lualu_15.settings import UPLOAD_API_TOKEN, IMAGES_STORE
+from scrape_1024lualu_15.settings import API_BASE_URL, CATEGORY_LIST, IMAGES_STORE, MEDIA_URL, MEDIA_API_TOKEN, UPLOAD_API_TOKEN
 
 
 class Scrape1024Lualu15Pipeline(object):
@@ -22,44 +22,78 @@ class MyImagesPipeline(ImagesPipeline):
 			yield scrapy.Request(image_url)
 
 	def item_completed(self, results, item, info):
-		image_paths = [x['path'] for ok, x in results if ok]
+		image_paths = [(x['path'], x['url']) for ok, x in results if ok]
 
-		api_base_url = "http://drzhan.com/wp-json/wp/v2/"
-		image_ids = []
-		content = ""
-		for image_path in image_paths:
-			headers = {}
-			headers['Authorization'] = "Bearer {}".format(UPLOAD_API_TOKEN)
-			headers['Content-Disposition'] = "attachment;filename={}".format(image_path.split("/")[-1])
-			file = open("{}/{}".format(IMAGES_STORE, image_path), "rb")
-			filename = image_path.split("/")[-1]
-			files = {
-				'file': (filename, file, 'image/{}'.format(filename.split(".")[-1]))
-			}
+		# for this site articles is only images. If no images downloaded it cannot be post.
+		if image_paths:
+			for image in item['images']:
+				if image['url'] == item['thumbnail_url']:
+					headers = {
+						'Referer': item['response_url']
+					}
+					response = requests.get(image['url'], headers=headers)
+					with open("downloads/{}".format(image['path']), "wb") as f:
+						for c in response:
+							f.write(c)
+					break
+
+			image_ids = []
+			thumbnail_url = tuple()
+			content = ""
+			for image_path, image_url in image_paths:
+				headers = {}
+				headers['Content-Disposition'] = "attachment;filename={}".format(image_path.split("/")[-1])
+				file = open("{}/{}".format(IMAGES_STORE, image_path), "rb")
+				filename = image_path.split("/")[-1]
+				files = {
+					'file': (filename, file, 'image/{}'.format(filename.split(".")[-1]))
+				}
+				try:
+					if image_url == item['thumbnail_url']:
+						headers['Authorization'] = "Bearer {}".format(UPLOAD_API_TOKEN)
+						response = requests.post("{}{}".format(API_BASE_URL, "media"), headers=headers, files=files)
+					else:
+						headers['Authorization'] = "Bearer {}".format(MEDIA_API_TOKEN)
+						response = requests.post("{}{}".format(MEDIA_URL, "media"), headers=headers, files=files)
+				except Exception as ex:
+					pass
+				else:
+					if image_url in item['articles']:
+						item_index = item['articles'].index(image_url)
+						item['articles'][item_index] = """
+							<img src="{}"><br>
+						""".format(response.json()['source_url'])
+					if image_url == item['thumbnail_url']:
+						thumbnail_url = (response.json()['id'], response.json()['source_url'])
+					image_ids.append((response.json()['id'], response.json()['source_url']))
+				file.close()
+				os.remove("{}/{}".format(IMAGES_STORE, image_path))
+			headers = {'Authorization': "Bearer {}".format(UPLOAD_API_TOKEN)}
+			categories = []
 			try:
-				response = requests.post("{}{}".format(api_base_url, "media"), headers=headers, files=files)
+				response = requests.get("{}{}".format(API_BASE_URL, "categories"), headers=headers)
 			except Exception as ex:
 				pass
 			else:
-				content += """
-					<img src='{}'><br>
-				""".format(response.json()['source_url'])
-				image_ids.append((response.json()['id'], response.json()['source_url']))
-				file.close()
-				os.remove("{}/{}".format(IMAGES_STORE, image_path))
-
-		headers = {'Authorization': "Bearer {}".format(UPLOAD_API_TOKEN)}
-		data = {
-			'title': item['topic_title'],
-			'content': content,
-			'status': 'publish',
-			'featured_media': image_ids[0][0]
-		}
-		try:
-			response = requests.post("{}{}".format(api_base_url, "posts"), headers=headers, data=data)
-		except Exception as ex:
-			pass
+				for category in response.json():
+					if category['name'] in CATEGORY_LIST:
+						categories.append(category['id'])
+			data = {
+				'title': item['title'],
+				'content': "<br> ".join(item['articles']),
+				'status': "publish"
+			}
+			if categories:
+				data['categories'] = categories
+			if thumbnail_url:
+				data['featured_media'] = thumbnail_url[0]
+			try:
+				response = requests.post("{}{}".format(API_BASE_URL, "posts"), headers=headers, data=data)
+			except Exception as ex:
+				pass
+			else:
+				print("{}	{}	{}	{}".format("Success uploading to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
 		else:
-			print("Success uploading to API.")
+			print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
 
 		return item

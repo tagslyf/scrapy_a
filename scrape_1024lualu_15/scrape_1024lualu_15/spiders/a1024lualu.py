@@ -11,13 +11,32 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	page_num = 0
+	pages = 30
 
 	def parse(self, response):
-		print(response.xpath("""//div[@class="pages"]/a"""))
-		print(response.xpath("""//div[@class="pages"]/a""").extract())
-		print(response.xpath("""//div[@class="pages"]/a""").extract()[-1])
+		for page in range(self.pages + 1)[::1]:
+			if page:
+				yield scrapy.Request("{}&page={}".format(self.start_urls[0], page), callback=self.parse_thread)
 
 
 	def parse_thread(self, response):
-		print()
+		for tr in response.xpath("""//table[@id="ajaxtable"]/tbody/tr[@align="center"]"""):
+			if tr.xpath("./td/h3/a/text()").extract_first():
+				item = Scrape1024Lualu15Item()
+				item['response_url'] = response.url
+				item['title'] = tr.xpath("./td/h3/a/text()").extract_first()[8:]
+				item['thumbnail_url'] = ""
+				item['article_url'] = "http://{}/pw/{}".format(self.allowed_domains[0], tr.xpath("./td/h3/a/@href").extract_first())
+				item['articles'] = yield scrapy.Request(item['article_url'], meta={'item': item}, callback=self.parse_threadDetail)
+
+
+	def parse_threadDetail(self, response):
+		item = response.meta['item']
+		item['image_urls'] = []
+		item['articles'] = []
+		for img in response.xpath("""//div[@id="read_tpc"]/img"""):
+			if not item['thumbnail_url']:
+				item['thumbnail_url'] = img.xpath("""./@src""").extract_first()
+			item['articles'].append(img.xpath("""./@src""").extract_first())	
+			item['image_urls'].append(img.xpath("""./@src""").extract_first())
+		yield item

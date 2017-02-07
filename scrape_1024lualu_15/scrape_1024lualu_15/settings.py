@@ -19,7 +19,8 @@ NEWSPIDER_MODULE = 'scrape_1024lualu_15.spiders'
 #USER_AGENT = 'scrape_1024lualu_15 (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -86,10 +87,6 @@ IMAGES_STORE = "downloads"
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
-AUTOTHROTTLE_ENABLED = True
-AUTOTHROTTLE_START_DELAY = 5
-AUTOTHROTTLE_MAX_DELAY = 60
-
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 #HTTPCACHE_ENABLED = True
@@ -98,5 +95,11 @@ AUTOTHROTTLE_MAX_DELAY = 60
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kdWFuemliYXIuY29tIiwiaWF0IjoxNDg1MzE2MDAxLCJuYmYiOjE0ODUzMTYwMDEsImV4cCI6MTQ4NTkyMDgwMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.n5p42PSONYawxkmnpFQsJ9wzo4jKPdwCzcktjdR28yg"
-UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kcnpoYW4uY29tIiwiaWF0IjoxNDg1NDExNjUyLCJuYmYiOjE0ODU0MTE2NTIsImV4cCI6MTQ4NjAxNjQ1MiwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.tm97o3O73J2_xkaZXDlCkgDad9H86KSivGQiD5ovnYg"
+API_BASE_URL = "http://drzhan.com/wp-json/wp/v2/"
+MEDIA_URL = "http://s1.imagescool.com/wp-json/wp/v2/"
+MEDIA_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zMS5pbWFnZXNjb29sLmNvbSIsImlhdCI6MTQ4NjEwMzQ2MywibmJmIjoxNDg2MTAzNDYzLCJleHAiOjE0ODY3MDgyNjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.zeSfJRANYyV5Mem_2h_S4AQcMyDpH-0041Ox5fr1c9A"
+UPLOAD_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kcnpoYW4uY29tIiwiaWF0IjoxNDg2Mzc3MjA3LCJuYmYiOjE0ODYzNzcyMDcsImV4cCI6MTQ4Njk4MjAwNywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.9pnhGHRp8K4EqZnKZxzLlgTuorrDjbn6KiM0yAWRXU4"
+CATEGORY_LIST = []
+DEFAULT_REQUEST_HEADERS = {
+	'Referer': ""
+}
