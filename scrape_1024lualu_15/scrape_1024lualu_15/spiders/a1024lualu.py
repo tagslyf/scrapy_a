@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-import scrapy
 import os, pprint, requests, scrapy, time
-from scrape_1024lualu_15.items import Scrape1024Lualu15Item
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+from scrape_1024lualu_15.items import Scrape1024Lualu15Item
+from scrape_1024lualu_15.settings import API_BASE_URL
 
 class A1024lualuSpider(scrapy.Spider):
 	name = "1024lualu"
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	pages = 30
+	pages = 60
 
 	def parse(self, response):
 		for page in range(self.pages + 1)[::1]:
@@ -27,6 +27,11 @@ class A1024lualuSpider(scrapy.Spider):
 				item['title'] = tr.xpath("./td/h3/a/text()").extract_first()[8:]
 				item['thumbnail_url'] = ""
 				item['article_url'] = "http://{}/pw/{}".format(self.allowed_domains[0], tr.xpath("./td/h3/a/@href").extract_first())
+				search_response = requests.get("{}posts?search={}".format(API_BASE_URL, item['title']))
+				if search_response.status_code == 200:
+					if search_response.json():
+						print("{}	{}	{}".format("Title existed in API.", item['article_url'], item['title']))
+						continue
 				item['articles'] = yield scrapy.Request(item['article_url'], meta={'item': item}, callback=self.parse_threadDetail)
 
 
