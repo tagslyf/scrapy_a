@@ -22,30 +22,36 @@ class MyImagesPipeline(ImagesPipeline):
 
 
 	def item_completed(self, results, item, info):
-		image_paths = [(x['path'], x['url']) for ok, x in results if ok]
+		if item['image_only']:
+			image_paths = [(x['path'], x['url']) for ok, x in results if ok]
 
-		# for this site articles is only images. If no images downloaded it cannot be post.
-		if image_paths:
-			self.process_upload(item, image_paths)
-		else:
-			if item['image_urls']:
-				for img_url in item['image_urls']:
-					img_response = requests.get(img_url)
-					if img_response.status_code in [200, 201]:
-						filename = "full/{}.jpg".format(str(uuid.uuid4()).replace("-", ""))
-						if not os.path.isdir("{}/full".format(IMAGES_STORE)):
-							os.mkdir("{}/full".format(IMAGES_STORE))
-						with open("{}/{}".format(IMAGES_STORE, filename), "wb") as f:
-							for c in img_response:
-								f.write(c)
-						image_paths.append((filename, img_url))
-						item['images'].append({'checksum': "", 'path': filename, 'url': img_url})
-				if image_paths:
-					self.process_upload(item, image_paths)
-				else:
-					print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))	
+			# for this site articles is only images. If no images downloaded it cannot be post.
+			if image_paths:
+				self.process_upload(item, image_paths)
 			else:
-				print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+				if item['image_urls']:
+					for img_url in item['image_urls']:
+						img_response = requests.get(img_url)
+						if img_response.status_code in [200, 201]:
+							filename = "full/{}.jpg".format(str(uuid.uuid4()).replace("-", ""))
+							if not os.path.isdir("{}/full".format(IMAGES_STORE)):
+								os.mkdir("{}/full".format(IMAGES_STORE))
+							with open("{}/{}".format(IMAGES_STORE, filename), "wb") as f:
+								for c in img_response:
+									f.write(c)
+							image_paths.append((filename, img_url))
+							item['images'].append({'checksum': "", 'path': filename, 'url': img_url})
+					if image_paths:
+						self.process_upload(item, image_paths)
+					else:
+						print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+				else:
+					print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+		else:
+			if item['articles']:
+				self.process_upload_text(item)
+			else:
+				print("{}	{}	{}	{}".format("Cannot upload to API(text only).", item['response_url'][22:], item['article_url'][22:], item['title']))
 
 		return item
 
@@ -65,6 +71,7 @@ class MyImagesPipeline(ImagesPipeline):
 		image_ids = []
 		thumbnail_url = tuple()
 		content = ""
+		okaytopost = True
 		for image_path, image_url in image_paths:
 			headers = {}
 			headers['Content-Disposition'] = "attachment;filename={}".format(image_path.split("/")[-1])
@@ -90,6 +97,7 @@ class MyImagesPipeline(ImagesPipeline):
 							item_img['error'] = response.json()['message']
 							item['images'][tmp_index] = item_img
 					print("Error uploading media: 	{}	{}	{}".format(item['title'], filename, response.json()['message']))
+					okaytopost = False
 				else:
 					if image_url in item['articles']:
 						item_index = item['articles'].index(image_url)
@@ -109,8 +117,38 @@ class MyImagesPipeline(ImagesPipeline):
 					if image_url == item['thumbnail_url']:
 						thumbnail_url = (response.json()['id'], response.json()['source_url'])
 					image_ids.append((response.json()['id'], response.json()['source_url']))
+					okaytopost = True
 			file.close()
 			os.remove("{}/{}".format(IMAGES_STORE, image_path))
+		if okaytopost:
+			headers = {'Authorization': "Bearer {}".format(UPLOAD_API_TOKEN)}
+			categories = []
+			try:
+				response = requests.get("{}{}".format(API_BASE_URL, "categories"), headers=headers)
+			except Exception as ex:
+				pass
+			else:
+				for category in response.json():
+					if category['name'] in CATEGORY_LIST:
+						categories.append(category['id'])
+			data = {
+				'title': item['title'],
+				'content': "<br> ".join(item['articles']),
+				'status': "publish"
+			}
+			if categories:
+				data['categories'] = categories
+			if thumbnail_url:
+				data['featured_media'] = thumbnail_url[0]
+			try:
+				response = requests.post("{}{}".format(API_BASE_URL, "posts"), headers=headers, data=data)
+			except Exception as ex:
+				pass
+			else:
+				print("{}	{}	{}	{}".format("Success uploading to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+
+
+	def process_upload_text(self, item):
 		headers = {'Authorization': "Bearer {}".format(UPLOAD_API_TOKEN)}
 		categories = []
 		try:
@@ -128,11 +166,9 @@ class MyImagesPipeline(ImagesPipeline):
 		}
 		if categories:
 			data['categories'] = categories
-		if thumbnail_url:
-			data['featured_media'] = thumbnail_url[0]
 		try:
 			response = requests.post("{}{}".format(API_BASE_URL, "posts"), headers=headers, data=data)
 		except Exception as ex:
 			pass
 		else:
-			print("{}	{}	{}	{}".format("Success uploading to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+			print("{}	{}	{}	{}".format("Success uploading to API(text only).", item['response_url'][22:], item['article_url'][22:], item['title']))

@@ -4,11 +4,10 @@ import requests, scrapy
 from jsasx.items import JsasxItem
 from jsasx.settings import API_BASE_URL
 
-
-class DuanziwangSpider(scrapy.Spider):
-	name = "duanziwang"
+class DuanziwangDuanzilaileSpider(scrapy.Spider):
+	name = "duanziwang_duanzilaile"
 	allowed_domains = ["duanziwang.com"]
-	start_urls = ['http://duanziwang.com/category/images']
+	start_urls = ['http://duanziwang.com/category/duanzilaile']
 
 	def parse(self, response):
 		articles = response.xpath("""//div[@class="content"]/article""")
@@ -32,7 +31,7 @@ class DuanziwangSpider(scrapy.Spider):
 
 	def parse_content(self, response):
 		item = response.meta['item']
-		item['articles'] = response.xpath("""//article[@class="article-content"]//img/@src""").extract()
-		item['image_urls'] = response.xpath("""//article[@class="article-content"]//img/@src""").extract()
-		item['image_only'] = True
+		item['articles'] = response.xpath("""//article[@class="article-content"]/p//text()""").extract()
+		item['image_urls'] = []
+		item['image_only'] = False
 		yield item
