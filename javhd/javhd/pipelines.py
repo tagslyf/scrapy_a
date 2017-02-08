@@ -90,6 +90,6 @@ class MyImagesPipeline(ImagesPipeline):
 			except Exception as ex:
 				pass
 			else:
-				print("{}	{}	{}".format("Success uploading to API.", item['response_url'], item['article_url']))
+				print("{}	{}	{}	{}".format("Success uploading to API.", item['response_url'], item['article_url'], item['title']))
 
 		return item

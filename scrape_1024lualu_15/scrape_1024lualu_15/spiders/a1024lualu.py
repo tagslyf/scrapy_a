@@ -12,13 +12,10 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	pages = 60
+	pages = 100
 
 
-	def parse(self, response):
-		yield scrapy.Request("http://x3.1024lualu.pw/pw/thread.php?fid=16&page=60", callback=self.parse_thread)
-		return None
-		
+	def parse(self, response):	
 		for page in range(self.pages + 1)[::1]:
 			if page:
 				yield scrapy.Request("{}&page={}".format(self.start_urls[0], page), callback=self.parse_thread)
