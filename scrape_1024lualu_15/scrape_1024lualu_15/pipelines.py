@@ -40,7 +40,10 @@ class MyImagesPipeline(ImagesPipeline):
 								f.write(c)
 						image_paths.append((filename, img_url))
 						item['images'].append({'checksum': "", 'path': filename, 'url': img_url})
-				self.process_upload(item, image_paths)
+				if image_paths:
+					self.process_upload(item, image_paths)
+				else:
+					print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
 			else:
 				print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
 

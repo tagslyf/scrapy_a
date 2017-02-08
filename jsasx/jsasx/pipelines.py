@@ -7,19 +7,19 @@
 import json, os, requests, scrapy, uuid
 from scrapy.pipelines.images import ImagesPipeline
 
-from scrape_1024lualu_16.settings import API_BASE_URL, CATEGORY_LIST, IMAGES_STORE, MEDIA_URL, MEDIA_API_TOKEN, UPLOAD_API_TOKEN
+from jsasx.settings import API_BASE_URL, CATEGORY_LIST, IMAGES_STORE, MEDIA_URL, MEDIA_API_TOKEN, UPLOAD_API_TOKEN
 
 
-class Scrape1024Lualu16Pipeline(object):
+class JsasxPipeline(object):
     def process_item(self, item, spider):
         return item
 
 
 class MyImagesPipeline(ImagesPipeline):
-
 	def get_media_requests(self, item, info):
 		for image_url in item['image_urls']:
 			yield scrapy.Request(image_url)
+
 
 	def item_completed(self, results, item, info):
 		image_paths = [(x['path'], x['url']) for ok, x in results if ok]
@@ -43,7 +43,7 @@ class MyImagesPipeline(ImagesPipeline):
 				if image_paths:
 					self.process_upload(item, image_paths)
 				else:
-					print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
+					print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))	
 			else:
 				print("{}	{}	{}	{}".format("Cannot upload to API.", item['response_url'][22:], item['article_url'][22:], item['title']))
 
