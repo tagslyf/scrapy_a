@@ -33,7 +33,7 @@ class MyImagesPipeline(ImagesPipeline):
 					for img_url in item['image_urls']:
 						img_response = requests.get(img_url)
 						if img_response.status_code in [200, 201]:
-							filename = "full/{}.jpg".format(str(uuid.uuid4()).replace("-", ""))
+							filename = "full/{}".format(img_url.split("/")[-1])
 							if not os.path.isdir("{}/full".format(IMAGES_STORE)):
 								os.mkdir("{}/full".format(IMAGES_STORE))
 							with open("{}/{}".format(IMAGES_STORE, filename), "wb") as f:
