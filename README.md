@@ -12,7 +12,7 @@ http://avalbum.com/wp-login.php 	--- eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3
 http://jpavnews.com/wp-login.php 	--- eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9qcGF2bmV3cy5jb20iLCJpYXQiOjE0ODU5MzQ3MjEsIm5iZiI6MTQ4NTkzNDcyMSwiZXhwIjoxNDg2NTM5NTIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.JgzVTy-tBYU2Puami4frrGIAXAJ79aBwsllXeXIVLmg
 	- https://www.hilive.tv/NewsList/ALL?p=1
 	- http://wap.nianhua03.xyz/news/articlelist/36.html
-http://jsasx.com
+http://jsasx.com -- mmkuser | admin!2345
 	- http://www.mahua.com/
 	- http://duanziwang.com/
 	- http://duanziwang.com/category/images
