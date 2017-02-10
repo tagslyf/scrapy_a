@@ -129,7 +129,7 @@ class MyImagesPipeline(ImagesPipeline):
 				pass
 			else:
 				for category in response.json():
-					if category['name'] in CATEGORY_LIST:
+					if category['name'] in item['categories']:
 						categories.append(category['id'])
 			data = {
 				'title': item['title'],
@@ -157,7 +157,7 @@ class MyImagesPipeline(ImagesPipeline):
 			pass
 		else:
 			for category in response.json():
-				if category['name'] in CATEGORY_LIST:
+				if category['name'] in item['categories']:
 					categories.append(category['id'])
 		data = {
 			'title': item['title'],

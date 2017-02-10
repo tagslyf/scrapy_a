@@ -14,6 +14,7 @@ class MahuaJokesSpider(scrapy.Spider):
 		dls = response.xpath("""//div[@class="left"]/dl""")
 		for dl in dls:
 			item = JsasxItem()
+			item['categories'] = ["笑肖肖神回复"]
 			item['title'] = dl.xpath("""./dt/span//text()""").extract_first()
 			item['response_url'] = response.url
 			img_tag = dl.xpath("""./dd[@class="content"]/img""")

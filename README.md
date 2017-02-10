@@ -13,9 +13,16 @@ http://jpavnews.com/wp-login.php 	--- eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc
 	- https://www.hilive.tv/NewsList/ALL?p=1
 	- http://wap.nianhua03.xyz/news/articlelist/36.html
 http://jsasx.com -- mmkuser | admin!2345
-	- http://www.mahua.com/
-	- http://duanziwang.com/
+	笑肖肖搞笑图片
 	- http://duanziwang.com/category/images
+	- http://www.mahua.com/
+	笑肖肖段子
+	- http://duanziwang.com/category/duanzi
+	- http://duanziwang.com/category/duanzilaile
+	笑肖肖语录
+	- http://duanziwang.com/category/quotations
+	笑肖肖神回复
+	- http://www.mahua.com/tags/7755_1.htm
 http://ylbgzx.com
 	- http://www.huabian.com/
 	- http://ent.sina.com.cn/

@@ -18,6 +18,7 @@ class JsasxItem(Item):
 	thumbnail_url = Field()
 	article_url = Field()
 	articles = Field()
+	categories = Field()
 	image_only = Field()
 	image_urls = Field()
 	images = Field()

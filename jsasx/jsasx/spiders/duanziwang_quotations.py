@@ -15,6 +15,7 @@ class DuanziwangQuotationsSpider(scrapy.Spider):
 		for article in articles:
 			item = JsasxItem()
 			title = article.xpath("""./header/h2//text()""").extract_first()
+			item['categories'] = ["笑肖肖语录"]
 			item['title'] = title
 			item['response_url'] = response.url
 			item['thumbnail_url'] = ""
