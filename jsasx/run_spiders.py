@@ -11,8 +11,6 @@ from jsasx.spiders.mahua_jokes import MahuaJokesSpider
 
 
 if __name__ == "__main__":
-	print("Hello world.")
-
 	settings = get_project_settings()
 	process = CrawlerProcess(settings)
 	process.crawl(DuanziwangSpider)
