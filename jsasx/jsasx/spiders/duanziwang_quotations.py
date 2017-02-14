@@ -33,7 +33,10 @@ class DuanziwangQuotationsSpider(scrapy.Spider):
 
 	def parse_content(self, response):
 		item = response.meta['item']
-		item['articles'] = response.xpath("""//article[@class="article-content"]/p//text()""").extract()
+		if " ".join(response.xpath("""//article[@class="article-content"]/p//text()""").extract()).strip():
+			item['articles'] = response.xpath("""//article[@class="article-content"]/p//text()""").extract()
+		elif " ".join(response.xpath("""//article[@class="article-content"]/blockquote/p//text()""").extract()).strip():
+			item['articles'] = response.xpath("""//article[@class="article-content"]/blockquote/p//text()""").extract()
 		item['image_urls'] = []
 		item['image_only'] = False
 		yield item
