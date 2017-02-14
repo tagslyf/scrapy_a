@@ -25,10 +25,10 @@ class JavhdAllSpider(scrapy.Spider):
 			item['image_urls'] = [item['thumbnail_url']]
 			item['article_url'] = div.xpath("./a/@href").extract_first()
 			search_response = requests.get("{}posts?search={}".format(API_BASE_URL, item['title']))
-				if search_response.status_code == 200:
-					if search_response.json():
-						print("{}	{}	{}".format("Title existed in API.", item['article_url'], item['title']))
-						continue
+			if search_response.status_code == 200:
+				if search_response.json():
+					print("{}	{}	{}".format("Title existed in API.", item['article_url'], item['title']))
+					continue
 			item['articles'] = yield scrapy.Request(item['article_url'], meta={'item': item}, headers={'Referer': item['response_url']}, callback=self.scrape_articleContents)
 
 		next_page = response.xpath("""//a[@class="next navi paging"]/@href""").extract_first()
