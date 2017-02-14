@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy
+import requests, scrapy
 
 from javhd.items import JavhdItem
 
