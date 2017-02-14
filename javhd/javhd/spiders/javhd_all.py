@@ -2,6 +2,7 @@
 import requests, scrapy
 
 from javhd.items import JavhdItem
+from javhd.settings import API_BASE_URL
 
 
 class JavhdAllSpider(scrapy.Spider):
