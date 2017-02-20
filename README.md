@@ -4,6 +4,14 @@ Scraping site content.
 # Wordpress Sites
 mmkuser     $eQ1n9W@n9Zh@nM@nM@nK@n
 http://duanzibar.com/wp-login.php
+	- https://girlsreleased.com/#site/onlytease.com (testing)
+	- http://www.lamalinks.com/ (testing)
+		Topics:
+		1. Hardcore Pics
+		2. Girlfriend Pics
+		3. Reality Pics
+		4. Secretary Pics
+		5. Office Pics
 http://drzhan.com/wp-login.php
 	- http://x3.1024lualu.pw/pw/thread.php?fid=15
 	- http://x3.1024lualu.pw/pw/thread.php?fid=16
@@ -30,7 +38,10 @@ http://sxsbz.net
 	- http://www.lashu8.com/
 	- http://www.shubao4.com/
 	- http://www.shubao888.com/
-	
+http://moviesky8.com/
+	- http://www.87movie.com/
+	- https://movie.douban.com/later/beijing/
+
 # For backend: {url}/wp-login.php?mmk=open
 
 # Docs for WP API: http://v2.wp-api.org/reference/posts/

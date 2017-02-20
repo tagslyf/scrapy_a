@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Sqlite (Xerial) - temp.db">
+  <database-model serializer="dbm" rdbms="SQLITE" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <table id="3" parent="2" name="record"/>
+    <column id="4" parent="3" name="id">
+      <DataType>INT(11)(0,-1)|4</DataType>
+    </column>
+    <column id="5" parent="3" name="title">
+      <Position>1</Position>
+      <DataType>CHAR(100)(0,-1)|12</DataType>
+    </column>
+  </database-model>
+</dataSource>

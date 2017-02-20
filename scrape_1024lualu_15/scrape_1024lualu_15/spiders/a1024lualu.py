@@ -12,7 +12,8 @@ class A1024lualuSpider(scrapy.Spider):
 	allowed_domains = ["x3.1024lualu.pw"]
 	start_urls = ['http://x3.1024lualu.pw/pw/thread.php?fid=15']
 
-	pages = 200
+	# pages = 200
+	pages = 1
 
 
 	def parse(self, response):	
@@ -22,6 +23,13 @@ class A1024lualuSpider(scrapy.Spider):
 
 
 	def parse_thread(self, response):
+		item = Scrape1024Lualu15Item()
+		item['response_url'] = "http://x3.1024lualu.pw/pw/thread.php?fid=15"
+		item['title'] = "丝袜制服美腿内射（29P）"
+		item['thumbnail_url'] = ""
+		item['article_url'] = "http://x3.1024lualu.pw/pw/htm_data/15/1702/545691.html"
+		item['articles'] = yield scrapy.Request(item['article_url'], meta={'item': item}, callback=self.parse_threadDetail)
+		return None
 		for tr in response.xpath("""//table[@id="ajaxtable"]/tbody/tr[@align="center"]"""):
 			if tr.xpath("./td/h3/a/text()").extract_first():
 				item = Scrape1024Lualu15Item()
@@ -43,13 +51,15 @@ class A1024lualuSpider(scrapy.Spider):
 		item['articles'] = []
 		if response.xpath("""//div[@id="read_tpc"]/img"""):
 			for img in response.xpath("""//div[@id="read_tpc"]/img"""):
-				item['articles'].append(img.xpath("""./@src""").extract_first())
-				item['image_urls'].append(img.xpath("""./@src""").extract_first())
+				if img.xpath("""./@src""").extract_first()[:4] == "http":
+					item['articles'].append(img.xpath("""./@src""").extract_first())
+					item['image_urls'].append(img.xpath("""./@src""").extract_first())
 		else:
 			html = BeautifulSoup(response.body, "html.parser")
 
 			imgs = html.find('div', {'id': "read_tpc"}).findAll("img")
 			for img in imgs:
-				item['articles'].append(img['src'])
-				item['image_urls'].append(img['src'])
+				if img['src'][:4] == "http":
+					item['articles'].append(img['src'])
+					item['image_urls'].append(img['src'])
 		yield item
